@@ -5,3 +5,4 @@ if accuracy_input.replace(".", "", 1).isdigit():
     print(f"Model accuracy is {accuracy}")
 else:
     print("Invalid input. Please enter a numeric value.")
+
