@@ -7,3 +7,5 @@ while True:
     total += num
 
 print("Total:", total)
+
+
