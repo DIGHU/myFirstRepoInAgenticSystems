@@ -1,11 +1,11 @@
--- Create users table
+ Create users table
 CREATE TABLE users (
     user_id INTEGER PRIMARY KEY,
     name TEXT,
     signup_date DATE
 );
 
--- Create orders table
+ Create orders table
 CREATE TABLE orders (
     order_id INTEGER PRIMARY KEY,
     user_id INTEGER,
@@ -13,28 +13,28 @@ CREATE TABLE orders (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
--- Create activity table
+ Create activity table
 CREATE TABLE activity (
     user_id INTEGER,
     login_count INTEGER,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
--- Insert into users
+ Insert into users
 INSERT INTO users VALUES (1, 'Aarav', '2023-01-10');
 INSERT INTO users VALUES (2, 'Diya', '2023-02-14');
 INSERT INTO users VALUES (3, 'Rohan', '2023-03-01');
 INSERT INTO users VALUES (4, 'Meera', '2023-04-11');
 INSERT INTO users VALUES (5, 'Kabir', '2023-05-06');
 
--- Insert into orders
+ Insert into orders
 INSERT INTO orders VALUES (101, 1, 500);
 INSERT INTO orders VALUES (102, 1, 700);
 INSERT INTO orders VALUES (103, 2, 300);
 INSERT INTO orders VALUES (104, 4, 900);
 INSERT INTO orders VALUES (105, 4, 400);
 
--- Insert into activity
+ Insert into activity
 INSERT INTO activity VALUES (1, 25);
 INSERT INTO activity VALUES (2, 10);
 INSERT INTO activity VALUES (3, 5);
