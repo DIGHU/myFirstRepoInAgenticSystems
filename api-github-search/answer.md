@@ -1,4 +1,4 @@
-# Conceptual Answers
+
 
 ## 1. What is the role of query parameters in this request?
 
