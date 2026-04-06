@@ -1,0 +1,113 @@
+ Create users table
+CREATE TABLE users (
+    user_id INTEGER PRIMARY KEY,
+    name TEXT,
+    signup_date DATE
+);
+
+ Create orders table
+CREATE TABLE orders (
+    order_id INTEGER PRIMARY KEY,
+    user_id INTEGER,
+    amount INTEGER,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+ Create activity table
+CREATE TABLE activity (
+    user_id INTEGER,
+    login_count INTEGER,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+ Insert into users
+INSERT INTO users VALUES (1, 'Aarav', '2023-01-10');
+INSERT INTO users VALUES (2, 'Diya', '2023-02-14');
+INSERT INTO users VALUES (3, 'Rohan', '2023-03-01');
+INSERT INTO users VALUES (4, 'Meera', '2023-04-11');
+INSERT INTO users VALUES (5, 'Kabir', '2023-05-06');
+
+ Insert into orders
+INSERT INTO orders VALUES (101, 1, 500);
+INSERT INTO orders VALUES (102, 1, 700);
+INSERT INTO orders VALUES (103, 2, 300);
+INSERT INTO orders VALUES (104, 4, 900);
+INSERT INTO orders VALUES (105, 4, 400);
+
+ Insert into activity
+INSERT INTO activity VALUES (1, 25);
+INSERT INTO activity VALUES (2, 10);
+INSERT INTO activity VALUES (3, 5);
+INSERT INTO activity VALUES (5, 12);
+
+ Query 1
+SELECT u.name, o.amount
+FROM users u
+INNER JOIN orders o ON u.user_id = o.user_id;
+
+ Query 2
+SELECT u.name, COALESCE(SUM(o.amount), 0) AS total_order_amount
+FROM users u
+INNER JOIN orders o ON u.user_id = o.user_id
+GROUP BY u.user_id, u.name;
+
+ Query 3
+SELECT u.user_id, u.name, a.login_count
+FROM users u
+LEFT JOIN activity a ON u.user_id = a.user_id;
+
+ Query 4
+SELECT u.user_id, u.name
+FROM users u
+LEFT JOIN orders o ON u.user_id = o.user_id
+WHERE o.order_id IS NULL;
+
+ Query 5
+SELECT u.user_id, u.name,
+       COALESCE(SUM(o.amount), 0) AS total_order_amount,
+       a.login_count
+FROM users u
+LEFT JOIN orders o ON u.user_id = o.user_id
+LEFT JOIN activity a ON u.user_id = a.user_id
+GROUP BY u.user_id, u.name, a.login_count;
+
+ Query 6
+SELECT DISTINCT u.user_id, u.name, o.amount
+FROM users u
+INNER JOIN orders o ON u.user_id = o.user_id
+WHERE o.amount > 400;
+
+ Query 7
+SELECT u.user_id, u.name, COALESCE(SUM(o.amount), 0) AS total_order_amount
+FROM users u
+INNER JOIN orders o ON u.user_id = o.user_id
+GROUP BY u.user_id, u.name
+ORDER BY total_order_amount DESC
+LIMIT 3;
+
+ Query 8
+SELECT u.user_id, u.name,
+       COALESCE(SUM(o.amount), 0) AS total_order_amount,
+       a.login_count
+FROM users u
+LEFT JOIN orders o ON u.user_id = o.user_id
+LEFT JOIN activity a ON u.user_id = a.user_id
+GROUP BY u.user_id, u.name, a.login_count
+ORDER BY total_order_amount DESC, a.login_count DESC;
+
+ Query 9
+SELECT u.user_id, u.name, AVG(o.amount) AS avg_order_amount
+FROM users u
+INNER JOIN orders o ON u.user_id = o.user_id
+GROUP BY u.user_id, u.name;
+
+ Query 10
+SELECT u.user_id, u.name,
+       COALESCE(SUM(o.amount), 0) AS total_order_amount,
+       a.login_count
+FROM users u
+LEFT JOIN orders o ON u.user_id = o.user_id
+LEFT JOIN activity a ON u.user_id = a.user_id
+GROUP BY u.user_id, u.name, a.login_count
+ORDER BY total_order_amount DESC
+LIMIT 3;
